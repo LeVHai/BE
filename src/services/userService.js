@@ -5,6 +5,7 @@ import databaseService from "./databaseService.js";
 import { ObjectId } from "mongodb";
 config();
 class UserService {
+  //Tao chuoi token
   signAccessToken({ user_id }) {
     return signToken({
       payload: { user_id, token_type: TOKEN.ACCESS_TOKEN },
@@ -15,6 +16,7 @@ class UserService {
       },
     });
   }
+  //Tao chuoi token
   signRefreshToken({ user_id }) {
     return signToken({
       payload: { user_id, token_type: TOKEN.REFRESH_TOKEN },
@@ -25,18 +27,20 @@ class UserService {
       },
     });
   }
+
   signAccessTokenAndRefreshToken({ user_id }) {
     return Promise.all([
       this.signAccessToken({ user_id }),
       this.signRefreshToken({ user_id }),
     ]);
   }
+
   async getUserInfo(user_Id) {
     const res = await databaseService.user.findOne(
       { _id: new ObjectId(user_Id) },
       { projection: { password: 0 } },
     );
-    return res
+    return res;
   }
   async login(user_id) {
     const [access_token, refresh_token] =
@@ -56,17 +60,15 @@ class UserService {
 
     return { access_token, refresh_token };
   }
+
   async logout(token) {
     const a = await databaseService.refresh_token.deleteOne({
       refresh_token: token,
     });
-    console.log(a);
-
     return true;
   }
+
   async refreshToken(user_id) {
-    console.log("?>>>>>",user_id,"?????");
-    
     const access_token = await this.signAccessToken({ user_id });
     return access_token;
   }

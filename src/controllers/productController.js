@@ -28,9 +28,11 @@ export const getProduct = async (req, res) => {
     data: result,
   });
 };
+
 export const createProduct = async (req, res) => {
   const data = req.body;
   let imageUrl
+  // upload image
   if (req.file) {
     const result = await uploadImageStream(req.file);
     imageUrl = result.secure_url;
@@ -39,15 +41,16 @@ export const createProduct = async (req, res) => {
     ...data,
     image: imageUrl,
   });
+
   return res.status(HTTP_STATUS.CREATED).json({
     success: true,
     message: "Tạo sản phẩm thành công!",
     data: result,
   });
 };
+
 export const updateProduct = async (req, res) => {
   const data = req.body;
-  
   const productID = req.params.id;
   if (req.file) {
     const result = await uploadImageStream(req.file);
@@ -68,11 +71,7 @@ export const updateProduct = async (req, res) => {
 };
 export const deleteProduct = async (req, res) => {
   const productId = req.params.id;
-  console.log("fdsafsdfds",productId);
-  
   const result = await productService.deleteProduct(productId);
-  console.log(result);
-  
   if (!result) {
     return res.status(HTTP_STATUS.NOT_FOUND).json({
       success: false,

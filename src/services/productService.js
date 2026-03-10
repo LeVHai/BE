@@ -35,7 +35,6 @@ class ProductService {
   }
   async updateProduct(productId, payload) {
     console.log(productId,payload,"............................");
-    
     const result = await databaseService.products.findOneAndUpdate(
       { _id: new ObjectId(productId) },
       {

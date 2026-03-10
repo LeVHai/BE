@@ -15,13 +15,13 @@ class DatabaseService {
         "Pinged your deployment. You successfully connected to MongoDB!",
       );
 
-      await databaseService.user.insertOne({
-        _id: new ObjectId(),
-        name: "Admin",
-        avatar: "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/Image%20FP_2024/avatar-cute-3.jpg",
-        email: "admin@gmail.com",
-        password: sha256("Admin@123"),
-      });
+      // await databaseService.user.insertOne({
+      //   _id: new ObjectId(),
+      //   name: "Admin",
+      //   avatar: "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/Image%20FP_2024/avatar-cute-3.jpg",
+      //   email: "admin@gmail.com",
+      //   password: sha256("Admin@123"),
+      // });
     } catch (error) {
       console.log(error);
       throw error;
