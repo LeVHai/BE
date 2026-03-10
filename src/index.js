@@ -8,7 +8,7 @@ import { defaultErrorHandler } from "./middlewares/errorMiddleware.js";
 import cors from 'cors'
 config();
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 app.use(cors({
   origin: "http://localhost:5173",
@@ -19,6 +19,9 @@ app.use(express.json());
 databaseService.connect();
 app.use("/user", usersRouter);
 app.use("/product", productRouter);
+app.get("/ping", (req, res) => {
+  res.send("pong");
+});
 app.use(defaultErrorHandler)
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
