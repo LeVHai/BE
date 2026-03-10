@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import dotenv from "dotenv";
 import { sha256 } from "../utils/crypto.js";
 
@@ -14,12 +14,14 @@ class DatabaseService {
       console.log(
         "Pinged your deployment. You successfully connected to MongoDB!",
       );
-      
-      //   await databaseService.user.insertOne({
-      //   _id: "123",
-      //   email: "admin@gmail.com",
-      //   password: sha256("123456"),
-      // });
+
+      await databaseService.user.insertOne({
+        _id: new ObjectId(),
+        name: "Admin",
+        avatar: "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/Image%20FP_2024/avatar-cute-3.jpg",
+        email: "admin@gmail.com",
+        password: sha256("Admin@123"),
+      });
     } catch (error) {
       console.log(error);
       throw error;
@@ -34,6 +36,9 @@ class DatabaseService {
   }
   get categories() {
     return this.db.collection("categories");
+  }
+  get refresh_token() {
+    return this.db.collection("refresh_token");
   }
 }
 const databaseService = new DatabaseService();

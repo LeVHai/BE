@@ -49,7 +49,6 @@ export const handleUploadImage =async (req)=>{
           if(!Boolean(files.image)){
             return reject(new Error('File is empty'))
           }
-          console.log("files>>>>>>>>>>",files);
           
           resolve(files.image);
         });
