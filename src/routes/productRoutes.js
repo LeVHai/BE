@@ -12,6 +12,7 @@ import {
   deleteProduct,
   getProduct,
   getProductList,
+  searchProduct,
   updateProduct,
 } from "../controllers/productController.js";
 import { authMiddleware } from "../middlewares/userMiddleware.js";
@@ -43,6 +44,11 @@ productRouter.delete(
   authMiddleware,
   ObjectIdValidator,
   wrapHandleError(deleteProduct),
+);
+productRouter.get(
+  "/search",
+  authMiddleware,
+  wrapHandleError(searchProduct),
 );
 
 export default productRouter;

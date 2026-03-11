@@ -31,7 +31,7 @@ export const getProduct = async (req, res) => {
 
 export const createProduct = async (req, res) => {
   const data = req.body;
-  let imageUrl
+  let imageUrl;
   // upload image
   if (req.file) {
     const result = await uploadImageStream(req.file);
@@ -42,7 +42,7 @@ export const createProduct = async (req, res) => {
     image: imageUrl,
   });
 
-  return res.status(HTTP_STATUS.CREATED).json({
+  return res.status(HTTP_STATUS.OK).json({
     success: true,
     message: "Tạo sản phẩm thành công!",
     data: result,
@@ -63,7 +63,7 @@ export const updateProduct = async (req, res) => {
       message: "Sản phẩm không tồn tại!",
     });
   }
-  return res.status(HTTP_STATUS.CREATED).json({
+  return res.status(HTTP_STATUS.OK).json({
     success: true,
     message: "Cập nhật sản phẩm thành công!",
     data: result,
@@ -71,7 +71,11 @@ export const updateProduct = async (req, res) => {
 };
 export const deleteProduct = async (req, res) => {
   const productId = req.params.id;
+  console.log("sfadf",productId);
+
   const result = await productService.deleteProduct(productId);
+console.log(result);
+
   if (!result) {
     return res.status(HTTP_STATUS.NOT_FOUND).json({
       success: false,
@@ -80,6 +84,19 @@ export const deleteProduct = async (req, res) => {
   }
   return res.status(HTTP_STATUS.OK).json({
     success: true,
-    message:"Xóa thành công!"
+    message: "Xóa sản phẩm thành công!",
+  });
+};
+export const searchProduct = async (req, res) => {
+  const { keyword = "" } = req.query;
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+
+  const result = await productService.searchProduct({ keyword, limit, page });
+
+  return res.status(HTTP_STATUS.OK).json({
+    success: true,
+    message: "Thành công.",
+    ...result,
   });
 };
