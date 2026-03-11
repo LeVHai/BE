@@ -1,4 +1,7 @@
 # Product Management System
+
+=>> Em có up cả phần .env cho đầy đủ thôi ạ, vì là demo
+
 ## Demo
 - Demo Credentials:
   - Email: admin@gmail.com
